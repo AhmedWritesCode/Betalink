@@ -1,0 +1,272 @@
+[
+  {
+    "id": 1,
+    "name": "Timetable: Final Exam Timetable",
+    "category": "Timetables",
+    "description": "Final Exam Timetable for Semester I, 2025-2026.",
+    "sharedBy": "Admin",
+    "date": "2024-12-19",
+    "resourceLink": "https://example.com/exam-timetable"
+  },
+  {
+    "id": 2,
+    "name": "Timetable: Semester I 25/26",
+    "category": "Timetables",
+    "description": "Semester I 2025/2026 class schedule.",
+    "sharedBy": "Admin",
+    "date": "2024-12-18",
+    "resourceLink": "https://example.com/semester-timetable"
+  },
+  {
+    "id": 3,
+    "name": "Announcement: Online Teaching & Learning Method on 25th December 2024",
+    "category": "Official Announcements",
+    "description": "Information on online teaching and learning methods during the holiday period.",
+    "sharedBy": "Faculty",
+    "date": "2024-12-17",
+    "resourceLink": "https://example.com/online-learning"
+  },
+  {
+    "id": 4,
+    "name": "Announcement: Public Holiday on 25th December",
+    "category": "Official Announcements",
+    "description": "Details regarding the university closure on 25th December.",
+    "sharedBy": "Admin",
+    "date": "2024-12-16",
+    "resourceLink": "https://example.com/holiday-announcement"
+  },
+  {
+    "id": 5,
+    "name": "Material: Course Slides for CS101",
+    "category": "Course Materials",
+    "description": "Lecture slides for the CS101 Introduction to Programming course.",
+    "sharedBy": "Lecturer",
+    "date": "2024-12-15",
+    "resourceLink": "https://example.com/cs101-slides"
+  },
+  {
+    "id": 6,
+    "name": "Material: CS202 Notes",
+    "category": "Course Materials",
+    "description": "Comprehensive notes for CS202 Data Structures and Algorithms.",
+    "sharedBy": "TA",
+    "date": "2024-12-14",
+    "resourceLink": "https://example.com/cs202-notes"
+  },
+  {
+    "id": 7,
+    "name": "Community: Computing Students Group",
+    "category": "Communities",
+    "description": "Access the official WhatsApp group for Computing students.",
+    "sharedBy": "Student Union",
+    "date": "2024-12-13",
+    "resourceLink": "https://example.com/computing-group"
+  },
+  {
+    "id": 8,
+    "name": "Community: Coding Bootcamp Telegram Channel",
+    "category": "Communities",
+    "description": "Join the Telegram channel for coding bootcamp discussions and updates.",
+    "sharedBy": "Organizer",
+    "date": "2024-12-12",
+    "resourceLink": "https://example.com/coding-bootcamp"
+  },
+  {
+    "id": 9,
+    "name": "News: Faculty of Computing Coding Competition Results",
+    "category": "News",
+    "description": "The results of the latest coding competition organized by the Faculty of Computing.",
+    "sharedBy": "Event Team",
+    "date": "2024-12-11",
+    "resourceLink": "https://example.com/coding-competition-results"
+  },
+  {
+    "id": 10,
+    "name": "News: Seminar on AI in Education",
+    "category": "News",
+    "description": "A seminar discussing the use of AI in higher education.",
+    "sharedBy": "Professor",
+    "date": "2024-12-10",
+    "resourceLink": "https://example.com/ai-seminar"
+  },
+  {
+    "id": 11,
+    "name": "Final Year Project: Briefing Date Announcement",
+    "category": "Final Year Project",
+    "description": "Announcement of the date for the final year project briefing session.",
+    "sharedBy": "Supervisor",
+    "date": "2024-12-09",
+    "resourceLink": "https://example.com/fyp-briefing-date"
+  },
+  {
+    "id": 12,
+    "name": "Final Year Project: Lecturer Expertise List",
+    "category": "Final Year Project",
+    "description": "List of lecturers with expertise for final year projects.",
+    "sharedBy": "Department",
+    "date": "2024-12-08",
+    "resourceLink": "https://example.com/fyp-expertise"
+  },
+  {
+    "id": 13,
+    "name": "Timetable: Final Exam Period Calendar",
+    "category": "Timetables",
+    "description": "A calendar outlining all final exams for the year.",
+    "sharedBy": "Admin",
+    "date": "2024-12-07",
+    "resourceLink": "https://example.com/final-exam-calendar"
+  },
+  {
+    "id": 14,
+    "name": "Timetable: Spring Semester 2026 Schedule",
+    "category": "Timetables",
+    "description": "Timetable for the Spring Semester 2026.",
+    "sharedBy": "Admin",
+    "date": "2024-12-06",
+    "resourceLink": "https://example.com/spring-timetable"
+  },
+  {
+    "id": 15,
+    "name": "Announcement: Winter Break Guidelines",
+    "category": "Official Announcements",
+    "description": "Guidelines for university operations during the winter break.",
+    "sharedBy": "Student Affairs",
+    "date": "2024-12-05",
+    "resourceLink": "https://example.com/winter-break"
+  },
+  {
+    "id": 16,
+    "name": "Announcement: New Semester Start Date",
+    "category": "Official Announcements",
+    "description": "The start date for the new semester.",
+    "sharedBy": "Admin",
+    "date": "2024-12-04",
+    "resourceLink": "https://example.com/new-semester-date"
+  },
+  {
+    "id": 17,
+    "name": "Material: CS303 Online Tutorials",
+    "category": "Course Materials",
+    "description": "Online tutorials for the CS303 Web Development course.",
+    "sharedBy": "Lecturer",
+    "date": "2024-12-03",
+    "resourceLink": "https://example.com/cs303-tutorials"
+  },
+  {
+    "id": 18,
+    "name": "Material: Algorithms Practice Questions",
+    "category": "Course Materials",
+    "description": "Practice questions for algorithms preparation.",
+    "sharedBy": "TA",
+    "date": "2024-12-02",
+    "resourceLink": "https://example.com/algorithms-practice"
+  },
+  {
+    "id": 19,
+    "name": "Community: AI Ethics Research Group",
+    "category": "Communities",
+    "description": "Join the AI Ethics Research Group on Slack.",
+    "sharedBy": "Research Lead",
+    "date": "2024-12-01",
+    "resourceLink": "https://example.com/ai-ethics-group"
+  },
+  {
+    "id": 20,
+    "name": "Community: Software Development Forum",
+    "category": "Communities",
+    "description": "A forum for software developers to discuss projects and coding issues.",
+    "sharedBy": "Moderator",
+    "date": "2024-11-30",
+    "resourceLink": "https://example.com/software-forum"
+  },
+  {
+    "id": 21,
+    "name": "News: Coding Bootcamp Graduation Ceremony",
+    "category": "News",
+    "description": "Details and updates about the upcoming coding bootcamp graduation ceremony.",
+    "sharedBy": "Event Organizer",
+    "date": "2024-11-29",
+    "resourceLink": "https://example.com/coding-bootcamp-graduation"
+  },
+  {
+    "id": 22,
+    "name": "News: Career Fair Announcement",
+    "category": "News",
+    "description": "Information about the upcoming career fair for computing students.",
+    "sharedBy": "Career Center",
+    "date": "2024-11-28",
+    "resourceLink": "https://example.com/career-fair"
+  },
+  {
+    "id": 23,
+    "name": "Final Year Project: Proposal Submission Deadline",
+    "category": "Final Year Project",
+    "description": "Deadline for final year project proposal submission.",
+    "sharedBy": "Supervisor",
+    "date": "2024-11-27",
+    "resourceLink": "https://example.com/fyp-proposal-deadline"
+  },
+  {
+    "id": 24,
+    "name": "Final Year Project: Mentorship Program",
+    "category": "Final Year Project",
+    "description": "Information about the mentorship program for final year projects.",
+    "sharedBy": "Department",
+    "date": "2024-11-26",
+    "resourceLink": "https://example.com/fyp-mentorship"
+  },
+  {
+    "id": 25,
+    "name": "Timetable: Summer Semester Schedule",
+    "category": "Timetables",
+    "description": "Summer semester timetable for 2025.",
+    "sharedBy": "Admin",
+    "date": "2024-11-25",
+    "resourceLink": "https://example.com/summer-semester"
+  },
+  {
+    "id": 26,
+    "name": "Timetable: Winter Semester 2025",
+    "category": "Timetables",
+    "description": "Winter semester timetable for 2025.",
+    "sharedBy": "Admin",
+    "date": "2024-11-24",
+    "resourceLink": "https://example.com/winter-semester"
+  },
+  {
+    "id": 27,
+    "name": "Announcement: Online Exam Guidelines",
+    "category": "Official Announcements",
+    "description": "Guidelines for online exams during the pandemic.",
+    "sharedBy": "Exam Board",
+    "date": "2024-11-23",
+    "resourceLink": "https://example.com/online-exam-guidelines"
+  },
+  {
+    "id": 28,
+    "name": "Announcement: Campus Reopening Date",
+    "category": "Official Announcements",
+    "description": "Information about the campus reopening after lockdown.",
+    "sharedBy": "Admin",
+    "date": "2024-11-22",
+    "resourceLink": "https://example.com/campus-reopening"
+  },
+  {
+    "id": 29,
+    "name": "Material: Java Programming Course Book",
+    "category": "Course Materials",
+    "description": "A book for the Java Programming course.",
+    "sharedBy": "Lecturer",
+    "date": "2024-11-21",
+    "resourceLink": "https://example.com/java-programming-book"
+  },
+  {
+    "id": 30,
+    "name": "Material: Python Coding Challenges",
+    "category": "Course Materials",
+    "description": "Coding challenges to practice Python programming.",
+    "sharedBy": "TA",
+    "date": "2024-11-20",
+    "resourceLink": "https://example.com/python-challenges"
+  }
+]

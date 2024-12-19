@@ -1,0 +1,4 @@
+/* main.css or App.vue <style> */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
