@@ -31,7 +31,7 @@ import { RouterLink } from 'vue-router';
                   >About</RouterLink
                 >
                 <RouterLink
-                  to="Settings"
+                  to="Settingz"
                   class="text-white hover:bg-purple-900 hover:text-white rounded-md px-3 py-2"
                   >Account</RouterLink
                 >

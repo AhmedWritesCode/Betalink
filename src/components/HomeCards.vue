@@ -13,7 +13,7 @@ import Card from "@/components/Card.vue"
               Browse all of your faculty's resources in one place 
             </p>
             <RouterLink
-              to="Student"
+              to="StudentLogin"
               class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
             >
               Browse Existing Resources
@@ -25,7 +25,7 @@ import Card from "@/components/Card.vue"
               Upload links to the resources you wish to share with the students
             </p>
             <RouterLink
-              to="Lecturer"
+              to="LecturerLogin"
               class="inline-block bg-purple-500 text-white rounded-lg px-4 py-2 hover:bg-purple-600"
             >
               Add New Resources
