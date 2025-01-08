@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 const router = useRouter()
-const email = ref('')
+const username = ref('')
 const password = ref('')
 const ajaxURL = "http://web.fc.utm.my/ttms/web_man_webservice_json.cgi?"
 
@@ -12,15 +12,27 @@ function getEpoch() {
   return Math.round(new Date().getTime() / 1000)
 }
 
+onMounted(() => {
+  const storedData = sessionStorage.getItem("web_fc_utm_my_ttms")
+  if (storedData) {
+    const appStorage = JSON.parse(storedData)
+    if (appStorage.user_auth.description === "Pensyarah") {
+      router.push('/Lecturer') // Redirect if the user is a lecturer
+    } else {
+      sessionStorage.removeItem("web_fc_utm_my_ttms") // Clear invalid session
+    }
+  }
+})
+
 async function login() {
-  if (!email.value || !password.value) {
-    alert("Please fill in both email and password.")
+  if (!username.value || !password.value) {
+    alert("Please fill in both username and password.")
     return
   }
 
   const authData = {
     entity: 'authentication',
-    login: email.value,
+    login: username.value,
     password: password.value
   }
 
@@ -28,16 +40,18 @@ async function login() {
     const response = await axios.get(ajaxURL, { params: authData })
     const auth = response.data
 
-    if (auth && auth.length > 0) {
+    if (auth && auth.length > 0 && auth[0].description === "Pensyarah") {
       const appStorage = {
         user_auth: auth[0],
         epoch_last: getEpoch(),
         data: {}
       }
       sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
-      router.push('/Lecturer') // Redirect to the Student dashboard
+      router.push('/Lecturer') // Redirect to Lecturer dashboard
+    } else if (auth && auth.length > 0) {
+      alert("Access denied. Only lecturers can log in.")
     } else {
-      alert("Incorrect email or password. Please try again.")
+      alert("Incorrect username or password. Please try again.")
     }
   } catch (error) {
     console.error("Login failed:", error)
@@ -51,14 +65,14 @@ async function login() {
     <div class="w-full max-w-md p-6 bg-white rounded-md shadow-md">
       <div class="flex flex-col items-center justify-center">
         <span class="text-3xl font-semibold text-purple-700">βetalink</span>
-        <span class="text-2xl font-semibold text-gray-700">Login as a Lecturer</span>
+        <span class="text-2xl font-semibold text-gray-700">Login as an Admin</span>
       </div>
 
       <form class="mt-4" @submit.prevent="login">
         <label class="block">
           <span class="text-sm text-gray-700">User</span>
           <input
-            v-model="email"
+            v-model="username"
             type="text"
             class="block w-full mt-1 border-gray-200 rounded-md focus:border-indigo-600 focus:ring focus:ring-opacity-40 focus:ring-indigo-500"
           />

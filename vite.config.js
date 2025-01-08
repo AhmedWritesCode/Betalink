@@ -10,6 +10,8 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  base: '/Betalink/'
+  ,
   server: {
     port: 3000
   },

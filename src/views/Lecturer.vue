@@ -4,7 +4,7 @@ import Table from '@/components/Table.vue';
 import Upload from '@/components/UploadResource.vue';
 import CC from '@/components/CreateCat.vue';
 import resData from '@/ress.json';
-import UserTable from '@/components/UserTable.vue';
+import CCT from '@/components/cct.vue';
 
 // Manage categories and resources centrally in the parent component
 const categories = ref(['Timetables', 'Official Announcements', 'Course Materials', 'News', 'Final Year Project']);
@@ -43,9 +43,14 @@ const addResource = (newResource) => {
 
     <!-- Table Component -->
     <Table :items="items" />
+
+        <!-- Create Category Component -->
+        <CCT 
+      :categories="categories" 
+      @addCategory="addCategory" 
+      @deleteCategory="deleteCategory" 
+    />
     
   </div>
 
-  <UserTable />
-  
 </template>

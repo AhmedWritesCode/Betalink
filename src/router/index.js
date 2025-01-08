@@ -5,9 +5,7 @@ import LecLogin from '@/views/LecLogin.vue';
 import About from '@/views/About.vue';
 import Student from '@/views/Student.vue';
 import Lecturer from '@/views/Lecturer.vue';
-import Settings from '@/views/Settings.vue';
-import Settingz from '@/views/Settingz.vue';
-import logintry from '@/views/logintry.vue';
+import Account from '@/views/Account.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,19 +46,9 @@ const router = createRouter({
       component: Lecturer,
     },
     {
-      path: '/Settings',
-      name: 'Settings',
-      component: Settings,
-    },
-    {
-      path: '/Settingz',
-      name: 'Settingz',
-      component: Settingz,
-    },
-    {
-      path: '/logintry',
-      name: 'logintry',
-      component: logintry,
+      path: '/Account',
+      name: 'Account',
+      component: Account,
     },
   ],
 })
