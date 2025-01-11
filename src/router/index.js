@@ -6,6 +6,7 @@ import About from '@/views/About.vue';
 import Student from '@/views/Student.vue';
 import Lecturer from '@/views/Lecturer.vue';
 import Account from '@/views/Account.vue';
+import Admin from '@/views/Admin.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +50,11 @@ const router = createRouter({
       path: '/Account',
       name: 'Account',
       component: Account,
+    },
+    {
+      path: '/Admin',
+      name: 'Admin',
+      component: Admin,
     },
   ],
 })

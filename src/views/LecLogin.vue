@@ -65,7 +65,7 @@ async function login() {
     <div class="w-full max-w-md p-6 bg-white rounded-md shadow-md">
       <div class="flex flex-col items-center justify-center">
         <span class="text-3xl font-semibold text-purple-700">βetalink</span>
-        <span class="text-2xl font-semibold text-gray-700">Login as an Admin</span>
+        <span class="text-2xl font-semibold text-gray-700">Login as a Lecturer</span>
       </div>
 
       <form class="mt-4" @submit.prevent="login">
