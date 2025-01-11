@@ -1,56 +1,101 @@
 <script setup>
-import { ref } from 'vue';
-import Table from '@/components/Table.vue';
+import { ref, onMounted } from 'vue';
+import Table from '@/components/LecturerTable.vue';
 import Upload from '@/components/UploadResource.vue';
-import CC from '@/components/CreateCat.vue';
-import resData from '@/ress.json';
-import CCT from '@/components/cct.vue';
 
-// Manage categories and resources centrally in the parent component
-const categories = ref(['Timetables', 'Official Announcements', 'Course Materials', 'News', 'Final Year Project']);
-const items = ref([...resData]);
+// Manage resources and categories
+const items = ref([]);
+const categories = ref([]);
 
-// Add a new category to the list
-const addCategory = (newCategory) => {
-  categories.value.push(newCategory);
+// Fetch resources and categories from the backend
+onMounted(async () => {
+  try {
+    // Fetch categories
+    const categoriesResponse = await fetch('http://localhost:3000/api/categories');
+    if (!categoriesResponse.ok) throw new Error('Failed to fetch categories');
+    const categoriesData = await categoriesResponse.json();
+    categories.value = categoriesData.map(cat => cat.name);
+
+    // Fetch resources
+    const resourcesResponse = await fetch('http://localhost:3000/api/resources');
+    if (!resourcesResponse.ok) throw new Error('Failed to fetch resources');
+    const resourcesData = await resourcesResponse.json();
+    items.value = resourcesData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
+
+// Add a new resource
+const addResource = async (newResource) => {
+  try {
+    const response = await fetch('http://localhost:3000/api/resources', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newResource),
+    });
+
+    if (!response.ok) throw new Error('Failed to add resource');
+    const data = await response.json();
+    items.value.push(data); // Add the new resource to the list
+  } catch (error) {
+    console.error('Error adding resource:', error);
+  }
 };
 
-// Remove a category
-const deleteCategory = (categoryToDelete) => {
-  categories.value = categories.value.filter(category => category !== categoryToDelete);
+// Edit a resource
+const editResource = async (updatedResource) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/resources/${updatedResource.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedResource),
+    });
+
+    if (!response.ok) throw new Error('Failed to update resource');
+    const data = await response.json();
+
+    // Update the resource in the local list
+    items.value = items.value.map(resource =>
+      resource.id === updatedResource.id ? data : resource
+    );
+  } catch (error) {
+    console.error('Error updating resource:', error);
+  }
 };
 
-// Add a new resource to the table
-const addResource = (newResource) => {
-  items.value.push(newResource);
+// Delete a resource
+const deleteResource = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/resources/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) throw new Error('Failed to delete resource');
+
+    // Remove the resource from the local list
+    items.value = items.value.filter(resource => resource.id !== id);
+  } catch (error) {
+    console.error('Error deleting resource:', error);
+  }
 };
 </script>
 
 <template>
   <div>
-    <!-- Create Category Component -->
-    <CC 
-      :categories="categories" 
-      @addCategory="addCategory" 
-      @deleteCategory="deleteCategory" 
-    />
-
     <!-- Upload Resource Component -->
-    <Upload 
-      :categories="categories" 
-      @addResource="addResource" 
-    />
+    <Upload :categories="categories" @addResource="addResource" />
 
-    <!-- Table Component -->
-    <Table :items="items" />
-
-        <!-- Create Category Component -->
-        <CCT 
-      :categories="categories" 
-      @addCategory="addCategory" 
-      @deleteCategory="deleteCategory" 
+    <!-- Display Resources in a Table -->
+    <Table
+      :items="items"
+      :categories="categories"
+      @editResource="editResource"
+      @deleteResource="deleteResource"
     />
-    
   </div>
-
 </template>

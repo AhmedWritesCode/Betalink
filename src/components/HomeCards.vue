@@ -31,6 +31,19 @@ import Card from "@/components/Card.vue"
               Add New Resources
             </RouterLink>
           </Card>
+                  <!-- Card for Admin -->
+        <Card bg="bg-green-100">
+          <h2 class="text-2xl font-bold">For Admin</h2>
+          <p class="mt-2 mb-4">
+            Manage categories and monitor the resources shared on the platform
+          </p>
+          <RouterLink
+            to="AdminLogin"
+            class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600"
+          >
+            Manage Platform
+          </RouterLink>
+        </Card>
         </div>
       </div>
     </section>

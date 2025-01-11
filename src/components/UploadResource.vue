@@ -10,6 +10,7 @@
       <div class="form-group">
         <label for="category">Category</label>
         <select v-model="newResource.category" id="category" required>
+          <option value="" disabled>Select a category</option>
           <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
         </select>
       </div>
@@ -54,35 +55,47 @@ const newResource = ref({
 
 // Props received from the parent
 const props = defineProps({
-  categories: Array,
+  categories: {
+    type: Array,
+    required: true,
+  },
 });
 
 // Emit the new resource to the parent
-const emitNewResource = defineEmits(['addResource']);
+const emit = defineEmits(['addResource']);
 
 // Method to add the resource to the table
 const addResource = () => {
-  if (newResource.value.name && newResource.value.category) {
-    const resource = {
-      ...newResource.value,
-      id: Date.now(), // Generate a unique ID based on the timestamp
-    };
-    emitNewResource(resource); // Emit the resource to the parent component
-    newResource.value = {
-      name: '',
-      category: '',
-      description: '',
-      sharedBy: '',
-      date: '',
-      resourceLink: '',
-    };
+  // Validate required fields
+  if (
+    !newResource.value.name ||
+    !newResource.value.category ||
+    !newResource.value.description ||
+    !newResource.value.sharedBy ||
+    !newResource.value.date ||
+    !newResource.value.resourceLink
+  ) {
+    alert('Please fill out all fields.');
+    return;
   }
+
+  // Emit the new resource to the parent component
+  emit('addResource', { ...newResource.value });
+
+  // Reset the form
+  newResource.value = {
+    name: '',
+    category: '',
+    description: '',
+    sharedBy: '',
+    date: '',
+    resourceLink: '',
+  };
 };
 </script>
 
 <style scoped>
-
-.title{
+.title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
@@ -90,10 +103,11 @@ const addResource = () => {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background-color: #8A2BE2;
+  background-color: #8a2be2;
   box-shadow: 0 2px 4px rgba(255, 33, 203, 0.8);
   padding: 20px;
 }
+
 .upload-resource {
   max-width: 600px;
   margin: 0 auto;
@@ -111,7 +125,9 @@ label {
   font-weight: bold;
 }
 
-input, textarea {
+input,
+textarea,
+select {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
@@ -121,7 +137,7 @@ input, textarea {
 
 button {
   padding: 10px 20px;
-  background-color: #8A2BE2;
+  background-color: #8a2be2;
   color: white;
   border: none;
   border-radius: 4px;

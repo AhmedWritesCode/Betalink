@@ -1,11 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Table from '@/components/Table.vue';
-import resData from '@/ress.json';
 
-const items = ref([...resData]);
+// Create a reactive variable to store the resources
+const items = ref([]);
+
+// Fetch resources from the backend when the component is mounted
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:3000/api/resources');
+    if (!response.ok) {
+      throw new Error('Failed to fetch resources');
+    }
+    const data = await response.json();
+    items.value = data; // Update the items with the fetched data
+  } catch (error) {
+    console.error('Error fetching resources:', error);
+  }
+});
 </script>
 
 <template>
-    <Table :items="items" />
+  <Table :items="items" />
 </template>

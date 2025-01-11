@@ -1,5 +1,5 @@
 // Import the connection pool from test-db.js
-import pool from '../db.js';
+import pool from './db.js';
 
 // Define an async function to fetch and display data from the categories table
 async function displayCategories() {
