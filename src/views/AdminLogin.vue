@@ -13,11 +13,19 @@ function getEpoch() {
 }
 
 onMounted(() => {
-  const storedData = sessionStorage.getItem("web_fc_utm_my_ttms")
+  const storedData = sessionStorage.getItem("web_fc_utm_my_ttms");
   if (storedData) {
-    router.push('/Admin') // Redirect if session exists
+    const session = JSON.parse(storedData);
+    // Check if the username in the session is not A22EC4003
+    if (session.user_auth.login !== "A22EC4003") {
+      // Clear the session if the username is invalid
+      sessionStorage.removeItem("web_fc_utm_my_ttms");
+    } else {
+      // Redirect to /Admin if the session is valid and the username is correct
+      router.push('/Admin');
+    }
   }
-})
+});
 
 async function login() {
   if (!username.value || !password.value) {

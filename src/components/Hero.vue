@@ -19,7 +19,6 @@ defineProps({
           <h1 class="text-5xl font-semibold text-gray-900">All You Need, One Place</h1>
           <p class="mt-8 text-lg text-gray-500">Access course materials, assignments, and more—seamlessly organized and just a click away!</p>
           <div class="mt-10 flex justify-center gap-x-6">
-            <RouterLink to="#" class="rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-white hover:bg-violet-500">Get started</RouterLink>
             <RouterLink to="About" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500">Learn more →</RouterLink>
           </div>
         </div>

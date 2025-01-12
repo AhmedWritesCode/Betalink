@@ -16,6 +16,10 @@ const sortKey = ref('');
 const sortOrder = ref(1); // 1 for ascending, -1 for descending
 const editingResource = ref(null); // Track the resource being edited
 
+// State variables for pagination
+const currentPage = ref(1);
+const itemsPerPage = ref(10); // Number of items per page
+
 // Computed property for filtered and sorted items
 const filteredItems = computed(() => {
   let filtered = props.items.filter((item) => {
@@ -37,6 +41,18 @@ const filteredItems = computed(() => {
   }
 
   return filtered;
+});
+
+// Computed property for paginated items
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filteredItems.value.slice(start, end);
+});
+
+// Computed property for total pages
+const totalPages = computed(() => {
+  return Math.ceil(filteredItems.value.length / itemsPerPage.value);
 });
 
 // Function to handle sorting
@@ -72,6 +88,13 @@ const saveEdit = () => {
 const handleDelete = (id) => {
   if (confirm('Are you sure you want to delete this resource?')) {
     emit('deleteResource', id);
+  }
+};
+
+// Function to change page
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
   }
 };
 </script>
@@ -117,7 +140,7 @@ const handleDelete = (id) => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in filteredItems" :key="item.id">
+          <tr v-for="item in paginatedItems" :key="item.id">
             <!-- ID -->
             <td>{{ item.id }}</td>
 
@@ -168,6 +191,20 @@ const handleDelete = (id) => {
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        @click="changePage(currentPage + 1)"
+        :disabled="currentPage === totalPages"
+      >
+        Next
+      </button>
     </div>
   </div>
 </template>
@@ -256,5 +293,30 @@ button {
 
 button:hover {
   background-color: #7b1fa2;
+}
+
+/* Pagination Styles */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border: none;
+  background-color: #8a2be2;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
 }
 </style>

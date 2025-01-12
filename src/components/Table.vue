@@ -11,9 +11,13 @@ const searchQuery = ref('');
 const sortKey = ref('');
 const sortOrder = ref(1); // 1 for ascending, -1 for descending
 
+// State variables for pagination
+const currentPage = ref(1);
+const itemsPerPage = ref(10); // Number of items per page
+
 // Computed property for filtered and sorted items
 const filteredItems = computed(() => {
-  let filtered = props.items.filter((item) => { // Use props.items here
+  let filtered = props.items.filter((item) => {
     const query = searchQuery.value.toLowerCase();
     return (
       item.name.toLowerCase().includes(query) ||
@@ -34,6 +38,18 @@ const filteredItems = computed(() => {
   return filtered;
 });
 
+// Computed property for paginated items
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filteredItems.value.slice(start, end);
+});
+
+// Computed property for total pages
+const totalPages = computed(() => {
+  return Math.ceil(filteredItems.value.length / itemsPerPage.value);
+});
+
 // Function to handle sorting
 const sortTable = (key) => {
   if (sortKey.value === key) {
@@ -51,18 +67,24 @@ const getSortIcon = (key) => {
   }
   return '';
 };
+
+// Function to change page
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
 </script>
 
 <template>
-
-<h1 class="title">Resrouces</h1>
+  <h1 class="title">Resources</h1>
 
   <div>
     <!-- Search Bar -->
     <div id="searchContainer">
-      <input 
-        v-model="searchQuery" 
-        type="text" 
+      <input
+        v-model="searchQuery"
+        type="text"
         placeholder="🔍 Type the link name or description and we will look for it..."
       />
     </div>
@@ -94,7 +116,7 @@ const getSortIcon = (key) => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in filteredItems" :key="item.id">
+          <tr v-for="item in paginatedItems" :key="item.id">
             <td>{{ item.id }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.category }}</td>
@@ -106,6 +128,21 @@ const getSortIcon = (key) => {
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        @click="changePage(currentPage + 1)"
+        :disabled="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
+    <br>
   </div>
 </template>
 
@@ -130,7 +167,7 @@ const getSortIcon = (key) => {
 
 .StuTable th {
   cursor: pointer;
-  background-color: #8A2BE2; /* Violet for the header */
+  background-color: #8a2be2; /* Violet for the header */
   color: white;
   font-size: 16px;
 }
@@ -140,21 +177,21 @@ const getSortIcon = (key) => {
 }
 
 .StuTable tr:nth-child(even) td {
-  background-color: #E6E6FA; /* Light violet for even rows */
+  background-color: #e6e6fa; /* Light violet for even rows */
 }
 
 .StuTable tr:hover {
-  background-color: #DCD0FF; /* Hover effect with light violet */
+  background-color: #dcd0ff; /* Hover effect with light violet */
 }
 
 /* Sorting Icons */
 .asc::after {
-  content: "\25B2"; /* Up arrow */
+  content: '\25B2'; /* Up arrow */
   margin-left: 5px;
 }
 
 .desc::after {
-  content: "\25BC"; /* Down arrow */
+  content: '\25BC'; /* Down arrow */
   margin-left: 5px;
 }
 
@@ -166,7 +203,8 @@ const getSortIcon = (key) => {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.title{
+
+.title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
@@ -174,9 +212,33 @@ const getSortIcon = (key) => {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background-color: #8A2BE2;
+  background-color: #8a2be2;
   box-shadow: 0 2px 4px rgba(255, 33, 203, 0.8);
   padding: 20px;
 }
 
+/* Pagination Styles */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border: none;
+  background-color: #8a2be2;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
+}
 </style>

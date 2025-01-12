@@ -27,9 +27,9 @@ const dashboardRoute = computed(() => {
   if (userDetails.value) {
     switch (userDetails.value.description) {
       case 'Pelajar FSKSM':
-        return { name: 'Student' }; // Named route for Student dashboard
+        return { name: 'Home' }; // Named route for Student dashboard
       case 'Pensyarah':
-        return { name: 'Lecturer' }; // Named route for Lecturer dashboard
+        return { name: 'Home' }; // Named route for Lecturer dashboard
       default:
         return { name: 'Home' }; // Default route if role is unknown
     }

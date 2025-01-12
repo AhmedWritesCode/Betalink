@@ -11,7 +11,7 @@
         </div>
         <div class="flex justify-center w-full">
           <div class="text-white text-lg font-bold">
-            © 2024 βetalink. All rights reserved
+            © 2025 βetalink. All rights reserved
           </div>
         </div>
       </div>
