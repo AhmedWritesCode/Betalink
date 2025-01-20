@@ -138,6 +138,9 @@ const changePage = (page) => {
             </th>
             <th>Resource Link</th>
             <th>Actions</th>
+            <th @click="sortTable('visibility')">
+              Visibility <span :class="getSortIcon('visibility')"></span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -188,12 +191,22 @@ const changePage = (page) => {
 
               <button v-else @click="saveEdit" style="background-color: green; color: white; border: none; padding: 5px 10px; border-radius: 4px;">Save</button>
               <button 
-  v-if="item.lecturerId === lecturerId" 
-  @click="handleDelete(item.id)" 
-  style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px;">
-  Delete
-</button>
+                v-if="item.lecturerId === lecturerId" 
+                @click="handleDelete(item.id)" 
+                style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px;">
+                Delete
+              </button>
             </td>
+
+            <td v-if="editingResource?.id !== item.id">{{ item.visibility === 1 ? 'Visible to All' : 'Lecturers Only' }}</td>
+            
+            <td v-else>
+              <select v-model="editingResource.visibility">
+                <option value="1">Visible to All</option>
+                <option value="2">Lecturers Only</option>
+              </select>
+            </td>
+            
           </tr>
         </tbody>
       </table>

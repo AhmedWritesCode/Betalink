@@ -61,7 +61,15 @@ app.get('/api/resources', async (req, res) => {
   try {
     // Fetch all resources from the resources table
     const [rows] = await pool.query('SELECT * FROM resources');
-    res.json(rows); // Send the data as a JSON response
+    
+    // Filter resources based on visibility (if user is a student)
+    const userRole = req.headers['user-role']; // Pass user role from frontend
+    if (userRole === 'student') {
+      const filteredRows = rows.filter(resource => resource.visibility === 1);
+      res.json(filteredRows);
+    } else {
+      res.json(rows);
+    }
   } catch (error) {
     console.error('Error fetching resources:', error);
     res.status(500).json({ error: 'Failed to fetch resources' });
@@ -70,7 +78,7 @@ app.get('/api/resources', async (req, res) => {
 
 // Add this endpoint to server.js (after the existing endpoints)
 app.post('/api/resources', async (req, res) => {
-  const { name, category, description, sharedBy, date, resourceLink, lecturerId } = req.body;
+  const { name, category, description, sharedBy, date, resourceLink, lecturerId, visibility } = req.body;
 
   // Validate required fields
   if (!name || !category || !description || !sharedBy || !date || !resourceLink || !lecturerId) {
@@ -80,8 +88,8 @@ app.post('/api/resources', async (req, res) => {
   try {
     // Insert the new resource into the database
     const [result] = await pool.query(
-      'INSERT INTO resources (name, category, description, sharedBy, date, resourceLink, lecturerId) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, category, description, sharedBy, date, resourceLink, lecturerId]
+      'INSERT INTO resources (name, category, description, sharedBy, date, resourceLink, lecturerId, visibility) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [name, category, description, sharedBy, date, resourceLink, lecturerId, visibility || 1] // Default visibility is 1
     );
 
     // Return the newly created resource
@@ -93,6 +101,7 @@ app.post('/api/resources', async (req, res) => {
       sharedBy,
       date,
       resourceLink,
+      visibility: visibility || 1,
     });
   } catch (error) {
     console.error('Error adding resource:', error);
@@ -103,7 +112,7 @@ app.post('/api/resources', async (req, res) => {
 // Endpoint to update a resource
 app.put('/api/resources/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, category, description, sharedBy, date, resourceLink } = req.body;
+  const { name, category, description, sharedBy, date, resourceLink, visibility } = req.body;
 
   // Validate required fields
   if (!name || !category || !description || !sharedBy || !date || !resourceLink) {
@@ -113,8 +122,8 @@ app.put('/api/resources/:id', async (req, res) => {
   try {
     // Update the resource in the database
     const [result] = await pool.query(
-      'UPDATE resources SET name = ?, category = ?, description = ?, sharedBy = ?, date = ?, resourceLink = ? WHERE id = ?',
-      [name, category, description, sharedBy, date, resourceLink, id]
+      'UPDATE resources SET name = ?, category = ?, description = ?, sharedBy = ?, date = ?, resourceLink = ?, visibility = ? WHERE id = ?',
+      [name, category, description, sharedBy, date, resourceLink, visibility, id]
     );
 
     if (result.affectedRows === 0) {
@@ -122,7 +131,7 @@ app.put('/api/resources/:id', async (req, res) => {
     }
 
     // Return the updated resource
-    res.json({ id, name, category, description, sharedBy, date, resourceLink });
+    res.json({ id, name, category, description, sharedBy, date, resourceLink, visibility });
   } catch (error) {
     console.error('Error updating resource:', error);
     res.status(500).json({ error: 'Failed to update resource' });

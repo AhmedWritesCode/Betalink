@@ -35,6 +35,14 @@
         <input v-model="newResource.resourceLink" type="url" id="resourceLink" required />
       </div>
 
+      <div class="form-group">
+        <label for="visibility">Visibility</label>
+        <select v-model="newResource.visibility" id="visibility" required>
+          <option value="1">Visible to Students and Lecturers</option>
+          <option value="2">Visible to Lecturers Only</option>
+        </select>
+      </div>
+
       <button type="submit">Add Resource</button>
     </form>
   </div>
@@ -50,7 +58,8 @@ const newResource = ref({
   sharedBy: '',
   date: '',
   resourceLink: '',
-  lecturerId: '', // Add lecturerId field
+  lecturerId: '',
+  visibility: 1, // Default visibility (1: visible to all)
 });
 
 // Fetch lecturerId from session storage when the component is mounted
