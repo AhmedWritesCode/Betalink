@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import Table from '@/components/LecturerTable.vue';
 import Upload from '@/components/UploadResource.vue';
 
+const lecturerId = ref(''); // Define lecturerId as a ref
 // Manage resources and categories
 const items = ref([]);
 const categories = ref([]);
@@ -16,6 +17,11 @@ onMounted(async () => {
     const categoriesData = await categoriesResponse.json();
     categories.value = categoriesData.map(cat => cat.name);
 
+// Fetch lecturerId from session storage
+const appStorage = JSON.parse(sessionStorage.getItem("web_fc_utm_my_ttms"));
+if (appStorage && appStorage.user_auth) {
+  lecturerId.value = appStorage.user_auth.login_name; // Use login_name as lecturerId
+}
     // Fetch resources
     const resourcesResponse = await fetch('http://localhost:3000/api/resources');
     if (!resourcesResponse.ok) throw new Error('Failed to fetch resources');
@@ -34,7 +40,7 @@ const addResource = async (newResource) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newResource),
+      body: JSON.stringify({ ...newResource, lecturerId: lecturerId.value }), // Include lecturerId
     });
 
     if (!response.ok) throw new Error('Failed to add resource');
@@ -69,10 +75,14 @@ const editResource = async (updatedResource) => {
 };
 
 // Delete a resource
-const deleteResource = async (id) => {
+const deleteResource = async ({ id, lecturerId }) => {
   try {
     const response = await fetch(`http://localhost:3000/api/resources/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ lecturerId }), // Include lecturerId
     });
 
     if (!response.ok) throw new Error('Failed to delete resource');
@@ -92,10 +102,11 @@ const deleteResource = async (id) => {
 
     <!-- Display Resources in a Table -->
     <Table
-      :items="items"
-      :categories="categories"
-      @editResource="editResource"
-      @deleteResource="deleteResource"
-    />
+  :items="items"
+  :categories="categories"
+  :lecturerId="lecturerId"
+  @editResource="editResource"
+  @deleteResource="deleteResource"
+/>
   </div>
 </template>

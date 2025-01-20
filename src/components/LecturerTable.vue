@@ -3,8 +3,9 @@ import { computed, ref } from 'vue';
 
 // Props to receive the resources and categories
 const props = defineProps({
-  items: Array, // Items passed from the parent
-  categories: Array, // Categories for the dropdown in edit mode
+  items: Array,
+  categories: Array,
+  lecturerId: String, // Add lecturerId prop
 });
 
 // Emit events for editing and deleting resources
@@ -87,7 +88,7 @@ const saveEdit = () => {
 // Function to delete a resource
 const handleDelete = (id) => {
   if (confirm('Are you sure you want to delete this resource?')) {
-    emit('deleteResource', id);
+    emit('deleteResource', { id, lecturerId: props.lecturerId }); // Pass both id and lecturerId
   }
 };
 
@@ -186,7 +187,12 @@ const changePage = (page) => {
               </button>
 
               <button v-else @click="saveEdit" style="background-color: green; color: white; border: none; padding: 5px 10px; border-radius: 4px;">Save</button>
-              <button @click="handleDelete(item.id)" style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px;">Delete</button>
+              <button 
+  v-if="item.lecturerId === lecturerId" 
+  @click="handleDelete(item.id)" 
+  style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 4px;">
+  Delete
+</button>
             </td>
           </tr>
         </tbody>

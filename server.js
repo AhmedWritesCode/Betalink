@@ -70,18 +70,18 @@ app.get('/api/resources', async (req, res) => {
 
 // Add this endpoint to server.js (after the existing endpoints)
 app.post('/api/resources', async (req, res) => {
-  const { name, category, description, sharedBy, date, resourceLink } = req.body;
+  const { name, category, description, sharedBy, date, resourceLink, lecturerId } = req.body;
 
   // Validate required fields
-  if (!name || !category || !description || !sharedBy || !date || !resourceLink) {
+  if (!name || !category || !description || !sharedBy || !date || !resourceLink || !lecturerId) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
     // Insert the new resource into the database
     const [result] = await pool.query(
-      'INSERT INTO resources (name, category, description, sharedBy, date, resourceLink) VALUES (?, ?, ?, ?, ?, ?)',
-      [name, category, description, sharedBy, date, resourceLink]
+      'INSERT INTO resources (name, category, description, sharedBy, date, resourceLink, lecturerId) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, category, description, sharedBy, date, resourceLink, lecturerId]
     );
 
     // Return the newly created resource
@@ -132,16 +132,28 @@ app.put('/api/resources/:id', async (req, res) => {
 // Endpoint to delete a resource
 app.delete('/api/resources/:id', async (req, res) => {
   const { id } = req.params;
+  const { lecturerId } = req.body; // Get lecturerId from the request body
+
+  console.log('Delete request received:', { id, lecturerId }); // Debugging
 
   try {
-    // Delete the resource from the database
-    const [result] = await pool.query('DELETE FROM resources WHERE id = ?', [id]);
+    // Fetch the resource to check if the lecturerId matches
+    const [resource] = await pool.query('SELECT * FROM resources WHERE id = ?', [id]);
 
-    if (result.affectedRows === 0) {
+    if (resource.length === 0) {
+      console.log('Resource not found:', id); // Debugging
       return res.status(404).json({ error: 'Resource not found' });
     }
 
-    res.status(204).send(); // Success response with no content
+    if (resource[0].lecturerId !== lecturerId) {
+      console.log('Unauthorized delete attempt:', { resourceLecturerId: resource[0].lecturerId, lecturerId }); // Debugging
+      return res.status(403).json({ error: 'You are not authorized to delete this resource' });
+    }
+
+    // Delete the resource
+    await pool.query('DELETE FROM resources WHERE id = ?', [id]);
+    console.log('Resource deleted:', id); // Debugging
+    res.status(204).send();
   } catch (error) {
     console.error('Error deleting resource:', error);
     res.status(500).json({ error: 'Failed to delete resource' });

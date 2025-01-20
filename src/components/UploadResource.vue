@@ -41,9 +41,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
-// Create a reactive object for the new resource
 const newResource = ref({
   name: '',
   category: '',
@@ -51,6 +50,18 @@ const newResource = ref({
   sharedBy: '',
   date: '',
   resourceLink: '',
+  lecturerId: '', // Add lecturerId field
+});
+
+// Fetch lecturerId from session storage when the component is mounted
+onMounted(() => {
+  const appStorage = JSON.parse(sessionStorage.getItem("web_fc_utm_my_ttms"));
+  if (appStorage && appStorage.user_auth) {
+    newResource.value.lecturerId = appStorage.user_auth.login_name; // Use login_name as lecturerId
+    console.log('Lecturer ID:', newResource.value.lecturerId); // Debugging
+  } else {
+    console.error('Lecturer ID not found in session storage. Please log in again.');
+  }
 });
 
 // Props received from the parent
@@ -66,7 +77,6 @@ const emit = defineEmits(['addResource']);
 
 // Method to add the resource to the table
 const addResource = () => {
-  // Validate required fields
   if (
     !newResource.value.name ||
     !newResource.value.category ||
@@ -76,6 +86,12 @@ const addResource = () => {
     !newResource.value.resourceLink
   ) {
     alert('Please fill out all fields.');
+    return;
+  }
+
+  // Ensure lecturerId is included
+  if (!newResource.value.lecturerId) {
+    alert('Lecturer ID is missing. Please log in again.');
     return;
   }
 
@@ -90,8 +106,10 @@ const addResource = () => {
     sharedBy: '',
     date: '',
     resourceLink: '',
+    lecturerId: newResource.value.lecturerId, // Retain lecturerId for future submissions
   };
 };
+
 </script>
 
 <style scoped>
