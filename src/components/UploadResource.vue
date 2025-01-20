@@ -22,12 +22,22 @@
 
       <div class="form-group">
         <label for="sharedBy">Shared By</label>
-        <input v-model="newResource.sharedBy" type="text" id="sharedBy" required />
+        <input
+          v-model="newResource.sharedBy"
+          type="text"
+          id="sharedBy"
+          required
+        />
       </div>
 
       <div class="form-group">
         <label for="date">Date</label>
-        <input v-model="newResource.date" type="date" id="date" required />
+        <input
+          v-model="newResource.date"
+          type="date"
+          id="date"
+          required
+        />
       </div>
 
       <div class="form-group">
@@ -50,6 +60,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+const lecturerEmail = ref(''); // Store lecturer's email
 
 const newResource = ref({
   name: '',
@@ -66,10 +77,22 @@ const newResource = ref({
 onMounted(() => {
   const appStorage = JSON.parse(sessionStorage.getItem("web_fc_utm_my_ttms"));
   if (appStorage && appStorage.user_auth) {
-    newResource.value.lecturerId = appStorage.user_auth.login_name; // Use login_name as lecturerId
+    // Set lecturerId and lecturerEmail
+    newResource.value.lecturerId = appStorage.user_auth.login_name;
+    lecturerEmail.value = appStorage.user_auth.email || 'Unknown Email'; // Store lecturer's email
+
+    // Set today's date as the default date
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    newResource.value.date = today;
+
+    // Set Shared By to lecturer's email
+    newResource.value.sharedBy = lecturerEmail.value;
+
     console.log('Lecturer ID:', newResource.value.lecturerId); // Debugging
+    console.log('Lecturer Email:', lecturerEmail.value); // Debugging
+    console.log('Default Date:', newResource.value.date); // Debugging
   } else {
-    console.error('Lecturer ID not found in session storage. Please log in again.');
+    console.error('Lecturer ID or email not found in session storage. Please log in again.');
   }
 });
 
@@ -107,15 +130,16 @@ const addResource = () => {
   // Emit the new resource to the parent component
   emit('addResource', { ...newResource.value });
 
-  // Reset the form
+  // Reset the form (retain lecturerId and reset Shared By to lecturer's email)
   newResource.value = {
     name: '',
     category: '',
     description: '',
-    sharedBy: '',
-    date: '',
+    sharedBy: lecturerEmail.value, // Reset Shared By to lecturer's email
+    date: new Date().toISOString().split('T')[0], // Reset to today's date
     resourceLink: '',
-    lecturerId: newResource.value.lecturerId, // Retain lecturerId for future submissions
+    lecturerId: newResource.value.lecturerId, // Retain lecturerId
+    visibility: 1, // Reset visibility
   };
 };
 
