@@ -2,6 +2,8 @@
 
 Betalink is a resource-sharing platform designed for the Faculty of Computing at UTM. It allows lecturers to share resource links with students, while admins can manage categories and monitor resources. The platform improves resource sharing and management through a structured interface and role-based access control.
 
+JSON Service: http://web.fc.utm.my/ttms/web_man_webservice_json.cgi
+
 ## Features
 - **Admin**: Add/delete categories.
 - **Lecturer**: share, edit, delete, and set visibility for resource links.
