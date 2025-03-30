@@ -4,6 +4,9 @@ Betalink is a resource-sharing platform designed for the Faculty of Computing at
 
 JSON Service: http://web.fc.utm.my/ttms/web_man_webservice_json.cgi
 
+• Lecturer : 12085 - S808323
+• Student: A16CS4016 - 201608M10112
+
 ## Features
 - **Admin**: Add/delete categories.
 - **Lecturer**: share, edit, delete, and set visibility for resource links.
